@@ -1,0 +1,86 @@
+---
+title: "Typical Coding Interview Questions"
+author: "Michael Najarro, Jasmine Johnson"
+date: "3/13/2021"
+output: html_document
+---
+
+# Introduciton
+
+This is an R markdown containing solutions to common interview coding questions asked during job inteviews for Data analyst and Data Science roles.
+
+The authors Here claim ownership for the code here and state their solution here. Whenever one of the authors sought help or hints on how to solve a problem they cite their source. No author takes takes an exact solution from anyone, so for all we know our code may be unique or similar to someone elses, we wouldn't know.
+
+# Question 1: Fizz Buzz Problem
+
+Write a short program that prints each number from 1 to 100 on a new line. For each multiple of 3, print "Fizz" instead of the number. For each multiple of 5, print "Buzz" instead of the number. For numbers which are multiples of both 3 and 5, print "FizzBuzz" instead of the number.
+
+### Approach 1: tedious looping with conditionals
+####: Written by M. Najarro
+
+Thank you to Rory Spanton for his hints in his Towards Data Science Article article "How to Solve the FizzBuzz Problem in R" https://towardsdatascience.com/how-to-solve-the-fizzbuzz-problem-in-r-c62e7e6c959a
+
+```{r}
+w <- c(1:100)
+p1 <- rep('0',times = length(w))
+
+for(i in 1:length(w)){
+  if(w[i] %% 3 == 0 & w[i] %% 5 != 0 ){p1[i] ="fizz"}
+  else if(w[i] %% 5 == 0 & w[i] %% 3 != 0){p1[i] ="buzz"}
+  else if(w[i] %% 5 == 0 & w[i] %% 3 == 0){p1[i] ="fizzbuzz"}
+  else {p1[i] = w[i]}
+}
+
+p1
+```
+
+### Approach 2: pasting character strings
+####: written by M. Najarro
+
+A slighlty more efficient for loop that pastes together fizz, buzz or a combination of the words. The key idea here is to keep tacking on key words to build fizz buzz.
+
+Courtesy of Tom Scott for inspiration for his javascript approach which I modified to R: https://www.youtube.com/watch?v=QPZ0pIK_wsc
+
+```{r}
+library(stringr)
+w <- c(1:100)
+p11 <- vector('character',length(w))
+
+for(i in 1:length(w)){
+  if(w[i] %% 3 == 0){p11[i] = str_replace_all(string= paste(p11[i],"fizz"),
+                                              pattern=" ",
+                                              repl="")}
+  if(w[i] %% 5 == 0){p11[i] = str_replace_all(string = paste(p11[i],"buzz"),
+                                              pattern = " ",
+                                              repl = "")}
+  if(p11[i] == ""){p11[i] = as.character(w[i])}
+}
+
+p11
+```
+
+### Approach 3: use a `CASE WHEN` approach
+##### written by M. Najarro
+
+`Case When` is a common SQL approach for complex `if else` conditional statements.
+
+
+
+# Question 2: summation of digits of a number
+## written by: M. Najarro
+
+For any multi-digit number, sum the digits of the number, then print out both the original number and the sum of the digits.
+
+```{r}
+number_splitter<- function(number){
+  base <-  as.character(number)
+  v <- as.character(number)
+  v <- (strsplit(v, split= ""))
+  v<- as.numeric(unlist(v))
+  print(paste0("the number input is ",base,".","The sum of its digits is: ",sum(v)))
+}
+
+x= 435
+number_splitter(x)
+```
+
