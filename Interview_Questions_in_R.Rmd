@@ -84,3 +84,65 @@ x= 435
 number_splitter(x)
 ```
 
+
+#Question 3. Find all anagrams in a set of words
+
+There a few different versions of this question:
+
+from: https://www.interviewbit.com/problems/anagrams/
+
+*Given an array of strings, return all groups of strings that are anagrams. Represent a group by a list of integers representing the index in the original list.*
+
+from: https://www.csestack.org/group-anagrams-list-coding-challenge/
+
+*You have given a list of words. Write a program to returns a list of sets of anagrams.*
+
+from: https://stackoverflow.com/questions/8286554/using-python-find-anagrams-for-a-list-of-words
+
+*If I have a list of strings for example: ["car", "tree", "boy", "girl", "arc"...] What should I do in order to find anagrams in that list?*
+
+So I will try to solve this problem using R.
+
+### Approach 1:
+#### By Michael Najarro
+
+Let's create a vector of strings.
+
+```{r}
+my_words <- c("top", "pot", "cat", "rat", "tree",
+              "notebook", "radar", "turnip", "house", "pin",
+              "nip", "yoyo", "book", "racecar", "pup", "tar")
+```
+
+We need to take each word and store its constituent letters
+into a vector, with each vector per word stored in a list. the letters will be put in alphabetical order.
+
+```{r}
+storage <- sapply(my_words, function(x) paste(sort(unlist(strsplit(x, split= ""))), collapse = ""))
+
+#example
+unlist(storage[1])
+```
+
+Let's reverse the letters of each word.
+
+```{r eval=FALSE}
+reversed_storage <-sapply(storage, function(x) rev(x))
+
+```
+
+
+Now that we have the letters of each word alphabetically ordered, we compare the the words to se which sets of letters match; if they match thei are anagrams.
+
+```{r}
+for(i in 1:length(storage)){
+  b <- storage[i]
+  for(j in 2:length(storage)){
+      d <- storage[j]
+      if(b == d){print(paste(c(my_words[i], my_words[j])))}
+  else{}
+      
+  }
+}
+```
+
